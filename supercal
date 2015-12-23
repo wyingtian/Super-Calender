@@ -1,0 +1,31 @@
+#!/bin/sh
+#	supercal: supercal lists calender of a range of months and years
+# 			  month can be either a number of the word(at least first three letters matches)
+#			  supports a range of months e.g  2 - may 
+#	usage: supercal jan mar - may, 11 - 12 2014 2010 may dec
+#			thie will list jan mar apr may nov dev of 2014, whole year of 2010 may and dec of 2015
+#		  if no argument display the current month callender
+#  	note: when no year followd after month, display current year.
+#		  any number more than 12 is treated as a year, e.g 14 is year 14.
+#		  Do not support croos year boudary. e.g nov - feb is NOT supported
+
+if [ $# = 0 ] ; then
+	/usr/bin/cal 
+fi
+
+while [ $# -gt 0 ] 
+do  
+# create an the argument as a group
+	while [ $# -gt 0 -a  ! $(./isyear $1) ]  
+	do
+		GROUP="$GROUP $1"
+		shift 
+	done
+	GROUP="$GROUP $1"
+# call year cal to execute one group of argument
+	./yearcal $GROUP
+# reset GROUP
+	GROUP=""
+shift >/dev/null 2>&1
+done
+

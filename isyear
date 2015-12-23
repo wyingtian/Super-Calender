@@ -1,0 +1,6 @@
+#!/bin/sh
+# isyear: this is to check if a num if more than 12
+#		   called by supercal and yearcal
+if [ "$1" -gt 12 ] >/dev/null 2>&1; then
+	echo "0"
+fi
